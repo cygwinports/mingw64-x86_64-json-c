@@ -1,0 +1,36 @@
+CROSS_HOST="x86_64-w64-mingw32"
+inherit cross
+
+NAME="mingw64-x86_64-json-c"
+VERSION=0.11
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="C JSON library for Win64 toolchain"
+DESCRIPTION="JSON-C implements a reference counting object model that allows
+you to easily construct JSON objects in C, output them as JSON formatted
+strings and parse JSON formatted strings back into the C representation of
+JSON objects."
+HOMEPAGE="https://github.com/json-c/json-c/wiki"
+SRC_URI="https://s3.amazonaws.com/json-c_releases/releases/json-c-${VERSION}.tar.gz"
+SRC_DIR="json-c-${VERSION}"
+
+CYGPORT_USE_UNSTABLE_API=1
+src_unpack_hook() {
+	make distclean
+}
+
+CYGCONF_ARGS="
+	--disable-oldname-compat
+	ac_cv_func_malloc_0_nonnull=yes
+	ac_cv_func_realloc_0_nonnull=yes
+"
+
+src_install() {
+	cd ${B}
+	cyginstall
+
+	dosym json-c ${CROSS_INCLUDEDIR}/json
+	dosym libjson-c.a ${CROSS_LIBDIR}/libjson.a
+	dosym libjson-c.dll.a ${CROSS_LIBDIR}/libjson.dll.a
+	dosym json-c.pc ${CROSS_LIBDIR}/pkgconfig/json.pc
+}
