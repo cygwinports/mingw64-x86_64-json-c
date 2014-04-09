@@ -3,7 +3,7 @@ inherit cross
 
 NAME="mingw64-x86_64-json-c"
 VERSION=0.11
-RELEASE=1
+RELEASE=2
 CATEGORY="Devel"
 SUMMARY="C JSON library for Win64 toolchain"
 DESCRIPTION="JSON-C implements a reference counting object model that allows
@@ -13,6 +13,12 @@ JSON objects."
 HOMEPAGE="https://github.com/json-c/json-c/wiki"
 SRC_URI="https://s3.amazonaws.com/json-c_releases/releases/json-c-${VERSION}.tar.gz"
 SRC_DIR="json-c-${VERSION}"
+PATCH_URI="
+	http://pkgs.fedoraproject.org/cgit/json-c.git/plain/90.patch
+	http://pkgs.fedoraproject.org/cgit/json-c.git/plain/94.patch
+	http://pkgs.fedoraproject.org/cgit/json-c.git/plain/json-c-0.11-cflags.patch
+	http://pkgs.fedoraproject.org/cgit/json-c.git/plain/json-c-0.11-cve.patch
+"
 
 CYGPORT_USE_UNSTABLE_API=1
 src_unpack_hook() {
